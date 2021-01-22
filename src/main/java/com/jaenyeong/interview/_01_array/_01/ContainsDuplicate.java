@@ -1,5 +1,8 @@
 package com.jaenyeong.interview._01_array._01;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ContainsDuplicate {
 
     public static void main(String[] args) {
@@ -12,7 +15,17 @@ public class ContainsDuplicate {
      * 예) 1 2 3 4 5 6 => false
      * 예) 1 1 2 2 3 1 => true
      */
-    private boolean solution(int[] numbers) {
+    private boolean solution(final int[] numbers) {
+        final Set<Integer> set = new HashSet<>();
+
+        for (int number : numbers) {
+            if (set.contains(number)) {
+                return true;
+            }
+
+            set.add(number);
+        }
+
         return false;
     }
 }
