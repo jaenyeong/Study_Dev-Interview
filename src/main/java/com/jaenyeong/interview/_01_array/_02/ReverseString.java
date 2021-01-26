@@ -4,7 +4,7 @@ public class ReverseString {
 
     public static void main(String[] args) {
         ReverseString reverseString = new ReverseString();
-        System.out.println(reverseString.solution1("Hello".toCharArray()));
+        System.out.println(reverseString.solution("Hello".toCharArray()));
     }
 
     /**
@@ -15,8 +15,14 @@ public class ReverseString {
      * @param message
      * @return
      */
-    private char[] solution1(char[] message) {
-        return null;
+    private char[] solution1(final char[] message) {
+        final char[] reversedMessage = new char[message.length];
+
+        for (int i = message.length - 1; i >= 0; i--) {
+            reversedMessage[message.length - 1 - i] = message[i];
+        }
+
+        return reversedMessage;
     }
 
     /**
@@ -27,7 +33,13 @@ public class ReverseString {
      * @param message
      * @return
      */
-    private char[] solution(char[] message) {
+    private char[] solution(final char[] message) {
+        for (int i = 0; i < message.length / 2; i++) {
+            final char temp = message[i];
+            message[i] = message[message.length - 1 - i];
+            message[message.length - 1 - i] = temp;
+        }
+
         return message;
     }
 }
