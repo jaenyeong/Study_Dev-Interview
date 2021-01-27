@@ -1,12 +1,16 @@
 package com.jaenyeong.interview._01_array._03;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TwoSum {
+    private static final int NOT_FOUND = Integer.MIN_VALUE;
 
     public static void main(String[] args) {
         TwoSum twoSum = new TwoSum();
-        System.out.println(Arrays.toString(twoSum.solution(new int[]{2, 3, 5, 7}, 8)));
+        System.out.println(Arrays.toString(twoSum.findTwoSum(new int[]{2, 3, 5, 7}, 8)));
+        System.out.println(Arrays.toString(twoSum.findThreeSum(new int[]{2, 3, 5, 7, 9, 13}, 12)));
     }
 
     /**
@@ -20,7 +24,60 @@ public class TwoSum {
      * @param target
      * @return
      */
-    private int[] solution(int[] numbers, int target) {
+    private int[] findTwoSum(final int[] numbers, final int target) {
+        final Map<Integer, Integer> findNums = new HashMap<>();
+
+        for (int i = 0; i < numbers.length; i++) {
+            final int curNumber = numbers[i];
+            // 타겟보다 크거나 같은 수는 요구사항에 맞게 처리할 것
+            if (curNumber >= target) {
+                continue;
+            }
+
+            // 요구사항에 맞춰 유효하지 않은 값(예를 들어 음수)으로 설정
+            final Integer findIdx = findNums.getOrDefault(target - curNumber, NOT_FOUND);
+
+            if (findIdx != NOT_FOUND) {
+                return new int[]{findIdx, i};
+            }
+
+            findNums.put(curNumber, i);
+        }
+
+        // 결과가 존재하지 않는 경우는 요구사항에 맞게 처리할 것
+        return null;
+    }
+
+    private int[] findThreeSum(final int[] numbers, final int target) {
+        final Map<Integer, Integer> findNums = new HashMap<>();
+
+        for (int i = 0; i < numbers.length; i++) {
+            final int number = numbers[i];
+            findNums.put(number, i);
+        }
+
+        for (int i = 0; i < numbers.length; i++) {
+            final int firstNumber = numbers[i];
+
+            if (firstNumber >= target) {
+                continue;
+            }
+
+            for (int j = i + 1; j < numbers.length; j++) {
+                final int secondNumber = numbers[j];
+
+                if (secondNumber >= target) {
+                    continue;
+                }
+
+                final Integer findIdx = findNums.getOrDefault(target - firstNumber - secondNumber, NOT_FOUND);
+
+                if (findIdx != NOT_FOUND) {
+                    return new int[]{i, j, findIdx};
+                }
+            }
+        }
+
         return null;
     }
 }
