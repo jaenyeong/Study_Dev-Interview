@@ -1,15 +1,10 @@
 package com.jaenyeong.interview._01_array._04;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SortByArray {
 
     public static void main(String[] args) {
-        List<String> names = new LinkedList<>();
-        names.add("keesun");
-
         SortByArray sortByArray = new SortByArray();
         System.out.println(Arrays.toString(sortByArray.solution(new int[]{2, 4, 1, 5, 6, 9})));
     }
@@ -21,7 +16,20 @@ public class SortByArray {
      * @param numbers
      * @return
      */
-    private int[] solution(int[] numbers) {
+    private int[] solution(final int[] numbers) {
+        final boolean[] sortedValues = new boolean[100];
+
+        for (int number : numbers) {
+            sortedValues[number] = true;
+        }
+
+        int valueIdx = 0;
+        for (int i = 0; i < sortedValues.length; i++) {
+            if (sortedValues[i]) {
+                numbers[valueIdx++] = i;
+            }
+        }
+
         return numbers;
     }
 }
