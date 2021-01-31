@@ -5,14 +5,27 @@ public class LinkedList {
     private LinkedNode tail;
 
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add(new LinkedNode(1));
-        list.add(new LinkedNode(2));
-        list.add(new LinkedNode(3));
+        LinkedList loopList = new LinkedList();
+        loopList.add(new LinkedNode(1));
+        loopList.add(new LinkedNode(2));
+        loopList.add(new LinkedNode(3));
 
-        list.print();
-        list.reverse();
-        list.print();
+        loopList.print();
+        loopList.reverseForLoop();
+        System.out.println("[after reverse]");
+        loopList.print();
+
+        System.out.println("-----");
+
+        LinkedList recursiveList = new LinkedList();
+        recursiveList.add(new LinkedNode(1));
+        recursiveList.add(new LinkedNode(2));
+        recursiveList.add(new LinkedNode(3));
+
+        recursiveList.print();
+        recursiveList.reverseForRecursive();
+        System.out.println("[after reverse]");
+        recursiveList.print();
     }
 
     private void print() {
@@ -40,6 +53,36 @@ public class LinkedList {
      *
      * @return
      */
-    private void reverse() {
+    private void reverseForLoop() {
+        LinkedNode curr = this.head;
+        LinkedNode prev = null;
+        LinkedNode next = null;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        this.tail = this.head;
+        this.head = prev;
+    }
+
+    private void reverseForRecursive() {
+        this.tail = this.head;
+        this.head = this.reverseRecursive(this.head);
+    }
+
+    private LinkedNode reverseRecursive(final LinkedNode current) {
+        if (current.next == null) {
+            return current;
+        }
+
+        LinkedNode head = reverseRecursive(current.next);
+        current.next.next = current;
+        current.next = null;
+
+        return head;
     }
 }
