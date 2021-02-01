@@ -10,10 +10,11 @@ public class LinkedList {
         list.add(new LinkedNode(2));
         list.add(new LinkedNode(3));
         list.add(new LinkedNode(4));
+        list.add(new LinkedNode(5));
 
         list.print();
         LinkedNode node = list.findFromLast(2);
-        System.out.println(node.number);
+        System.out.println("answer: " + node.number);
     }
 
     /**
@@ -24,7 +25,27 @@ public class LinkedList {
      * @return
      */
     private LinkedNode findFromLast(int n) {
-        return null;
+        if (this.head == null) {
+            return null;
+        }
+
+        if (this.head.next == null) {
+            return this.head;
+        }
+
+        LinkedNode prev = this.head;
+        LinkedNode curr = this.head.next;
+
+        while (curr != null) {
+            if (curr.next == null) {
+                break;
+            }
+
+            prev = curr;
+            curr = curr.next;
+        }
+
+        return prev;
     }
 
     private void print() {
