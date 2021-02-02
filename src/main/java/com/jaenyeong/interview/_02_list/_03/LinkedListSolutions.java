@@ -32,43 +32,6 @@ public class LinkedListSolutions {
         }
     }
 
-    private LinkedNode findFromLast2(int n) {
-        LinkedNode current = this.head;
-        int length = 0;
-
-        while (current != null) {
-            length++;
-            current = current.next;
-        }
-
-        int targetIndex = length - n;
-        LinkedNode targetNode = this.head;
-
-        while (targetIndex > 0) {
-            targetNode = targetNode.next;
-            targetIndex--;
-        }
-
-        return targetNode;
-    }
-
-    private LinkedNode findFromLast3(int n) {
-        LinkedNode left = this.head;
-        LinkedNode right = this.head;
-        int count = 0;
-
-        while (right.next != null) {
-            if (count == n - 1) {
-                left = left.next;
-                right = right.next;
-            } else if (count++ < n) {
-                right = right.next;
-            }
-        }
-
-        return left;
-    }
-
     private void print() {
         LinkedNode nodeToPrint = this.head;
 
