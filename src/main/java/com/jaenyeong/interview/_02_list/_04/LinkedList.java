@@ -1,5 +1,8 @@
 package com.jaenyeong.interview._02_list._04;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LinkedList {
     private LinkedNode head;
     private LinkedNode tail;
@@ -16,6 +19,9 @@ public class LinkedList {
 
 //        list.print();
         System.out.println(list.hasCircle());
+
+        list.removeCircle();
+        list.print();
     }
 
     /**
@@ -27,7 +33,49 @@ public class LinkedList {
      * @return
      */
     private boolean hasCircle() {
-        return false;
+        LinkedNode slow = this.head;
+        LinkedNode fast = this.head;
+
+        while (true) {
+            if (fast.next == null || fast.next.next == null) {
+                return false;
+            }
+
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+
+            slow = slow.next;
+        }
+    }
+
+    private void removeCircle() {
+        if (this.head == null || this.head.next == null) {
+            return;
+        }
+
+        LinkedNode prev = this.head;
+        LinkedNode curr = this.head.next;
+
+        final Set<LinkedNode> nodeSet = new HashSet<>();
+        nodeSet.add(prev);
+
+        while (true) {
+            if (curr == null) {
+                return;
+            }
+
+            if (nodeSet.contains(curr)) {
+                prev.next = null;
+            } else {
+                nodeSet.add(curr);
+                prev.next = curr;
+                prev = curr;
+            }
+
+            curr = curr.next;
+        }
     }
 
     private void print() {
