@@ -5,7 +5,7 @@ import java.util.Stack;
 public class ReverseStackSolutions {
 
     public static void main(String[] args) {
-        Stack<Integer> numbers = new Stack();
+        Stack<Integer> numbers = new Stack<>();
         numbers.push(1);
         numbers.push(2);
         numbers.push(3);
