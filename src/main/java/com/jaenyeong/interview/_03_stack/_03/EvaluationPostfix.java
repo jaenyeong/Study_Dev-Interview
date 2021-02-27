@@ -1,16 +1,20 @@
 package com.jaenyeong.interview._03_stack._03;
 
-import java.util.LinkedList;
+import java.util.Stack;
 
 public class EvaluationPostfix {
+    private static final int FAIL = -1;
 
     public static void main(String[] args) {
-        EvaluationPostfix postfix = new EvaluationPostfix();
-        System.out.println(postfix.evaluate("52+") == 7);
-        System.out.println(postfix.evaluate("52-") == 3);
-        System.out.println(postfix.evaluate("52*") == 10);
-        System.out.println(postfix.evaluate("52/") == 2);
-        System.out.println(postfix.evaluate("521+-9*") == 18);
+        final EvaluationPostfix eval = new EvaluationPostfix();
+
+        System.out.println(eval.evaluate("52+") == 7);
+        System.out.println(eval.evaluate("52-") == 3);
+        System.out.println(eval.evaluate("52*") == 10);
+        System.out.println(eval.evaluate("52/") == 2);
+        System.out.println(eval.evaluate("521+-9*") == 18);
+        System.out.println(eval.evaluate("12+") == 3);
+        System.out.println(eval.evaluate("123+-5*") == -20);
     }
 
     /**
@@ -19,35 +23,37 @@ public class EvaluationPostfix {
      * 예) 123+-5*  => -20
      */
     private int evaluate(String postfix) {
-        postfix = postfix.trim();
-        LinkedList<Integer> numbers = new LinkedList<>();
+        final Stack<Integer> expressionStack = new Stack<>();
 
-        for (int i = 0; i < postfix.length(); i++) {
-            char c = postfix.charAt(i);
+        for (char exp : postfix.toCharArray()) {
+            if (Character.isDigit(exp)) {
+                expressionStack.push(exp - '0');
+                continue;
+            }
 
-            if (Character.isDigit(c)) {
-                numbers.push(c - '0');
-            } else {
-                int right = numbers.pop();
-                int left = numbers.pop();
+            if (expressionStack.size() < 2) {
+                return FAIL;
+            }
 
-                switch (c) {
-                    case '+':
-                        numbers.push(left + right);
-                        break;
-                    case '-':
-                        numbers.push(left - right);
-                        break;
-                    case '*':
-                        numbers.push(left * right);
-                        break;
-                    case '/':
-                        numbers.push(left / right);
-                        break;
-                }
+            final int topOperand = expressionStack.pop();
+            final int bottomOperand = expressionStack.pop();
+
+            switch (exp) {
+                case '+':
+                    expressionStack.push(bottomOperand + topOperand);
+                    break;
+                case '-':
+                    expressionStack.push(bottomOperand - topOperand);
+                    break;
+                case '*':
+                    expressionStack.push(bottomOperand * topOperand);
+                    break;
+                case '/':
+                    expressionStack.push(bottomOperand / topOperand);
+                    break;
             }
         }
 
-        return numbers.pop();
+       return expressionStack.pop();
     }
 }
