@@ -1,13 +1,18 @@
 package com.jaenyeong.interview._03_stack._04;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 public class Span {
 
     public static void main(String[] args) {
-        Span span = new Span();
+        final Span span = new Span();
+
         System.out.println(Arrays.toString(span.solution(new int[]{5, 3, 2, 4, 7, 1})));
         System.out.println(Arrays.toString(span.solution(new int[]{2, 3, 4, 5, 6, 7})));
+
+        System.out.println(Arrays.toString(span.solutionWithoutStack(new int[]{5, 3, 2, 4, 7, 1})));
+        System.out.println(Arrays.toString(span.solutionWithoutStack(new int[]{2, 3, 4, 5, 6, 7})));
     }
 
     /**
@@ -20,6 +25,37 @@ public class Span {
      * @return
      */
     private int[] solution(int[] price) {
-        return null;
+        final Stack<Integer> indices = new Stack<>();
+        final int[] resultSpan = new int[price.length];
+
+        indices.push(0);
+        resultSpan[0] = 1;
+
+        for (int i = 1; i < price.length; i++) {
+            while (!indices.isEmpty() && price[indices.peek()] <= price[i]) {
+                indices.pop();
+            }
+
+            resultSpan[i] = indices.isEmpty() ? i + 1 : i - indices.peek();
+            indices.push(i);
+        }
+
+        return resultSpan;
+    }
+
+    private int[] solutionWithoutStack(int[] price) {
+        final int[] resultSpan = new int[price.length];
+
+        resultSpan[0] = 1;
+
+        for (int i = 1; i < price.length; i++) {
+            resultSpan[i] = 1;
+
+            for (int j = i - 1; (j >= 0) && (price[i] >= price[j]); j--) {
+                resultSpan[i]++;
+            }
+        }
+
+        return resultSpan;
     }
 }
