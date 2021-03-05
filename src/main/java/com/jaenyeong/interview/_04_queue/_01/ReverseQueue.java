@@ -24,6 +24,14 @@ public class ReverseQueue {
     //  isEmpty(): 큐가 비어있는가.
     //  예) Q {1, 2, 3}  =>  Q {3, 2, 1}
     private Queue<Integer> reverse(Queue<Integer> numbers) {
+        if (numbers.isEmpty()) {
+            return numbers;
+        }
+
+        final int frontValue = numbers.poll();
+        numbers = reverse(numbers);
+        numbers.offer(frontValue);
+
         return numbers;
     }
 }
