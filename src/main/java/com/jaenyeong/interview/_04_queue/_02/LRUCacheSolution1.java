@@ -37,10 +37,9 @@ public class LRUCacheSolution1 {
             if (cache.size() == this.cacheSize) {
                 cache.removeLast();
             }
-            cache.addFirst(number);
         } else {
             cache.remove(number);
-            cache.addFirst(number);
         }
+        cache.addFirst(number);
     }
 }
