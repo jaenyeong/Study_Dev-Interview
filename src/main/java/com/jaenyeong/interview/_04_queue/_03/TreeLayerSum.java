@@ -40,8 +40,8 @@ public class TreeLayerSum {
 
         int result = root.value;
 
-        Queue<Node> q = new LinkedList<>();
-        q.offer(root);
+        final Queue<Node> q = new LinkedList<>();
+        q.add(root);
 
         while (!q.isEmpty()) {
             int count = q.size();
@@ -49,14 +49,15 @@ public class TreeLayerSum {
 
             while (count > 0) {
                 count--;
-                Node node = q.poll();
-                sum += node.value;
+                final Node popNode = q.poll();
+                sum += popNode.value;
 
-                if (node.left != null) {
-                    q.offer(node.left);
+                if (popNode.left != null) {
+                    q.offer(popNode.left);
                 }
-                if (node.right != null) {
-                    q.offer(node.right);
+
+                if (popNode.right != null) {
+                    q.offer(popNode.right);
                 }
             }
 
