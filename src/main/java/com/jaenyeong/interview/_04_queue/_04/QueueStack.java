@@ -15,16 +15,44 @@ public class QueueStack {
     Queue<Integer> q2 = new LinkedList<>();
 
     public static void main(String[] args) {
-        QueueStack stack = new QueueStack();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        System.out.println(stack.pop() == 3);
-        System.out.println(stack.pop() == 2);
-        System.out.println(stack.pop() == 1);
+        QueueStack firstStack = new QueueStack();
+        firstStack.firstPush(1);
+        firstStack.firstPush(2);
+        firstStack.firstPush(3);
+        System.out.println(firstStack.firstPop() == 3);
+        System.out.println(firstStack.firstPop() == 2);
+        System.out.println(firstStack.firstPop() == 1);
+
+        QueueStack secondStack = new QueueStack();
+        secondStack.secondPush(1);
+        secondStack.secondPush(2);
+        secondStack.secondPush(3);
+        System.out.println(secondStack.secondPop() == 3);
+        System.out.println(secondStack.secondPop() == 2);
+        System.out.println(secondStack.secondPop() == 1);
     }
 
-    private Integer pop() {
+    private Integer firstPop() {
+        if (q1.isEmpty()) {
+            return null;
+        }
+
+        return q1.poll();
+    }
+
+    private void firstPush(int number) {
+        q2.offer(number);
+
+        while (!q1.isEmpty()) {
+            q2.offer(q1.poll());
+        }
+
+        Queue<Integer> tempQ = q1;
+        q1 = q2;
+        q2 = tempQ;
+    }
+
+    private Integer secondPop() {
         if (q1.isEmpty()) {
             return null;
         }
@@ -42,7 +70,7 @@ public class QueueStack {
         return result;
     }
 
-    private void push(int number) {
+    private void secondPush(int number) {
         q1.offer(number);
     }
 }
