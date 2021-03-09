@@ -19,13 +19,25 @@ public class ValidateBST {
         root.left.right = new Node(5);
 
         ValidateBST validateBST = new ValidateBST();
-        System.out.println(validateBST.solution(root));
+        System.out.println(validateBST.validate(root));
     }
 
     /**
      * TODO 주어진 이진 트리가 BST 인지 확인하는 코드를 작성하라.
      */
-    private boolean solution(Node node) {
-        return true;
+    private boolean validate(Node node) {
+        if (node == null) {
+            return true;
+        }
+
+        if (node.left != null && node.value <= node.left.value) {
+            return false;
+        }
+
+        if (node.right != null && node.value >= node.right.value) {
+            return false;
+        }
+
+        return validate(node.left) && validate(node.right);
     }
 }
