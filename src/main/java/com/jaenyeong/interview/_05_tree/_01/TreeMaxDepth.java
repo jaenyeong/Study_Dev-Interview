@@ -21,24 +21,20 @@ public class TreeMaxDepth {
         root.right.right = new Node(7);
 
         TreeMaxDepth treeMaxDepth = new TreeMaxDepth();
-        System.out.println(treeMaxDepth.solution(root));
+        System.out.println(treeMaxDepth.getTreeDepth(root));
     }
 
     /**
      * TODO 주어진 이진 트리의 높이를 구하라
      */
-    private int solution(Node root) {
+    private int getTreeDepth(Node root) {
         if (root == null) {
             return 0;
         }
 
-        int leftDepth = solution(root.left);
-        int rightDepth = solution(root.right);
+        final int leftTreeDepth = getTreeDepth(root.left);
+        final int rightTreeDepth = getTreeDepth(root.right);
 
-        if (leftDepth > rightDepth) {
-            return leftDepth + 1;
-        } else {
-            return rightDepth + 1;
-        }
+        return leftTreeDepth > rightTreeDepth ? leftTreeDepth + 1 : rightTreeDepth + 1;
     }
 }

@@ -21,22 +21,24 @@ public class PostOrder {
         root.right.right = new Node(7);
 
         PostOrder postOrder = new PostOrder();
-        postOrder.print(root, 4);
+        postOrder.nodePrint(root, 4);
     }
 
-    private int count = 0;
+    private int nodePrintCount = 0;
 
     /**
      * TODO 주어진 이진 트리에서 후위탐색(왼쪽, 오른쪽, 루트 순서)시 n번째에 해당하는 값을 출력하라.
      */
-    private void print(Node root, int index) {
-        if (root != null) {
-            print(root.left, index);
-            print(root.right, index);
+    private void nodePrint(Node root, int index) {
+        if (root == null) {
+            return;
+        }
 
-            if (count++ == index) {
-                System.out.println(root.value);
-            }
+        nodePrint(root.left, index);
+        nodePrint(root.right, index);
+
+        if (nodePrintCount++ == index) {
+            System.out.println(root.value);
         }
     }
 }
